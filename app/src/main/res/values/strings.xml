@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Currency Calculator</string>
+    <string name="cost_of_service">Enter value</string>
+    <string name="calculate">Calculate</string>
+    <string name="result">Result: </string>
+    <string-array name="options">
+        <item>RUB-USD</item>
+        <item>RUB-EUR</item>
+        <item>USD-RUB</item>
+        <item>EUR-RUB</item>
+    </string-array>
+</resources>
