@@ -66,10 +66,10 @@ class MainActivity : AppCompatActivity() {
         var result = eur * cost
 
         when (spinner.selectedItem) {
-            "RUB-USD" -> result = (cost / usd)
-            "RUB-EUR" -> result = (cost / eur)
-            "EUR-RUB" -> result = (eur * cost)
-            "USD-RUB" -> result = (usd * cost)
+            "RUB-USD" -> result = cost / usd
+            "RUB-EUR" -> result = cost / eur
+            "EUR-RUB" -> result = eur * cost
+            "USD-RUB" -> result = usd * cost
         }
         tv_result.text = "Result: $result"
     }
