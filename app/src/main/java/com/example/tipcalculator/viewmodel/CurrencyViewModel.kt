@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.tipcalculator.data.CurrencyDatabase
-import com.example.tipcalculator.internet.DownloadCurrencies
 import com.example.tipcalculator.model.Currency
 import com.example.tipcalculator.repository.CurrencyRepository
 import kotlinx.coroutines.Dispatchers
@@ -20,18 +19,11 @@ class CurrencyViewModel(application: Application) : AndroidViewModel(application
 
     init {
         val currencyDao = CurrencyDatabase.getDatabase(application).currencyDao()
-        val downloadData = DownloadCurrencies(this)
-        repository = CurrencyRepository(currencyDao, downloadData)
+        repository = CurrencyRepository(currencyDao)
         getCurrencies = repository.getCurrencies
         resultTest = MutableLiveData()
 
         downloadCurrency()
-    }
-
-    fun addCurrency(currency: Currency) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.addCurrency(currency)
-        }
     }
 
     fun deleteAllCurrencies() {
