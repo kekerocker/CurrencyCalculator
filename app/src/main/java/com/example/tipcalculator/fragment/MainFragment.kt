@@ -32,18 +32,22 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMainBinding.bind(view)
         binding.viewmodel = mCurrencyViewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         binding.deleteData.setOnClickListener { mCurrencyViewModel.deleteAllCurrencies() }
-        binding.calculateButton.setOnClickListener { mCurrencyViewModel.resultTest.setValue(calculateTip()) }
+
+        binding.calculateButton.setOnClickListener {
+            mCurrencyViewModel.resultTest.setValue(calculateTip())
+        }
     }
 
     private fun calculateTip(): String {
+        var mathResult: Float? = null
+
         val numberInTextField = binding.tvCount.text.toString()
         val number = numberInTextField.toFloat()
         val usd = mCurrencyViewModel.getCurrencies.value?.usd?.toFloat()
         val eur = mCurrencyViewModel.getCurrencies.value?.eur?.toFloat()
-        var mathResult: Float? = null
 
         when (binding.spinner.selectedItem) {
             "RUB-USD" -> mathResult = number / usd!!
