@@ -34,7 +34,10 @@ class MainFragment : Fragment() {
         binding.viewmodel = mCurrencyViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        binding.deleteData.setOnClickListener { mCurrencyViewModel.deleteAllCurrencies() }
+        binding.refreshData.setOnClickListener {
+            mCurrencyViewModel.deleteAllCurrencies()
+            mCurrencyViewModel.downloadCurrency()
+        }
 
         binding.calculateButton.setOnClickListener {
             mCurrencyViewModel.resultTest.setValue(calculateTip())
@@ -54,6 +57,12 @@ class MainFragment : Fragment() {
             "RUB-EUR" -> mathResult = number / eur!!
             "EUR-RUB" -> mathResult = number * eur!!
             "USD-RUB" -> mathResult = number * usd!!
+        }
+
+        when (binding.spinner.selectedItem) {
+            "EUR-RUB" -> binding.tvSymbol.text = "€"
+            "USD-RUB" -> binding.tvSymbol.text = "$"
+            else -> binding.tvSymbol.text = "₽"
         }
         return String.format("%.2f", mathResult)
     }

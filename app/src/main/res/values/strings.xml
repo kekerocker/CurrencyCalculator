@@ -1,14 +1,15 @@
 <resources>
     <string name="app_name">Currency Calculator</string>
-    <string name="cost_of_service">Enter value</string>
-    <string name="calculate">Calculate</string>
-    <string name="result">Result: </string>
+    <string name="cost_of_service">Введите число</string>
+    <string name="calculate">Посчитать</string>
+    <string name="result">Результат: </string>
+    <string name="refresh_button">Обновить курсы валют</string>
+    <string name="current_eur">Текущая цена EUR:</string>
     <string-array name="options">
         <item>RUB-USD</item>
         <item>RUB-EUR</item>
         <item>USD-RUB</item>
         <item>EUR-RUB</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

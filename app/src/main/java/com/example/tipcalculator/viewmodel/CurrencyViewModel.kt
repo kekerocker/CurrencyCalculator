@@ -32,7 +32,7 @@ class CurrencyViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    private fun downloadCurrency() {
+    fun downloadCurrency() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.downloadCurrencies()
         }
