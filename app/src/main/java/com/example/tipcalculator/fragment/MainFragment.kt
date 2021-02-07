@@ -60,8 +60,8 @@ class MainFragment : Fragment() {
         }
 
         when (binding.spinner.selectedItem) {
-            "EUR-RUB" -> binding.tvSymbol.text = "€"
-            "USD-RUB" -> binding.tvSymbol.text = "$"
+            "RUB-EUR" -> binding.tvSymbol.text = "€"
+            "RUB-USD" -> binding.tvSymbol.text = "$"
             else -> binding.tvSymbol.text = "₽"
         }
         return String.format("%.2f", mathResult)

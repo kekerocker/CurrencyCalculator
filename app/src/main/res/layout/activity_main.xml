@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:background="#fff"
     tools:context=".MainActivity">
 
     <fragment
@@ -19,7 +20,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_host" />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,7 @@
     <string name="result">Результат: </string>
     <string name="refresh_button">Обновить курсы валют</string>
     <string name="current_eur">Текущая цена EUR:</string>
+    <string name="current_usd">Текущая цена USD:</string>
     <string-array name="options">
         <item>RUB-USD</item>
         <item>RUB-EUR</item>
