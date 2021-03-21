@@ -7,63 +7,19 @@
     android:padding="16dp"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/tv_usd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <fragment
+        android:id="@+id/fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Сurrent cost USD: 76,5" />
+        app:navGraph="@navigation/nav_host" />
 
-    <TextView
-        android:id="@+id/tv_eur"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_usd"
-        tools:text="Сurrent cost EUR: 86,5" />
 
-    <TextView
-        android:id="@+id/tv_result"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:textColor="@android:color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calculate_button"
-        tools:text="Результат: " />
-
-    <EditText
-        android:id="@+id/tv_count"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:autofillHints=""
-        android:hint="@string/cost_of_service"
-        android:inputType="numberDecimal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_eur" />
-
-    <Button
-        android:id="@+id/calculate_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:background="@android:color/holo_blue_dark"
-        android:text="@string/calculate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
-        android:background="@android:color/holo_blue_dark"
-        android:layout_marginTop="8dp"
-        android:entries="@array/options"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_count" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
