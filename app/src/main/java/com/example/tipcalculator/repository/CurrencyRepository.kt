@@ -31,9 +31,7 @@ class CurrencyRepository @Inject constructor(
             withContext(Dispatchers.Main) {
                 addCurrency(Currency(null, usd, eur))
             }
-
     }
-
 
     suspend fun deleteAllCurrencies() {
         currencyDao.deleteAllCurrencies()
