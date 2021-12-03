@@ -20,6 +20,4 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_host" />
 
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

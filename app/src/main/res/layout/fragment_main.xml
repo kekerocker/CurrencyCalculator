@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.MainFragment">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.example.tipcalculator.ui.viewmodel.CurrencyViewModel" />
+        <variable
+            name="fragment"
+            type="com.example.tipcalculator.ui.MainFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.MainFragment">
 
         <TextView
             android:id="@+id/tv_usd"
@@ -23,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
+            android:text="@{viewmodel.readAllData.usd}"
             android:textColor="#000000"
             app:layout_constraintStart_toEndOf="@+id/tv_usd"
             app:layout_constraintTop_toTopOf="parent"
@@ -45,6 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
+            android:text="@{viewmodel.readAllData.eur}"
             android:textColor="#000000"
             app:layout_constraintStart_toEndOf="@+id/tv_eur"
             app:layout_constraintTop_toBottomOf="@+id/tv_usd1"
@@ -81,6 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="150dp"
             android:background="@android:color/holo_blue_dark"
+            android:onClick="@{() -> fragment.calculateTip()}"
             android:text="@string/calculate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -91,6 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
+            android:onClick="@{() -> viewmodel.deleteAllCurrencies()}"
             android:text="Delete Data"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -112,10 +127,11 @@
             android:id="@+id/spinner"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_blue_dark"
             android:layout_marginTop="8dp"
+            android:background="@android:color/holo_blue_dark"
             android:entries="@array/options"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_count" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

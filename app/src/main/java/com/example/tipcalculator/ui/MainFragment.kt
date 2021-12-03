@@ -1,9 +1,11 @@
 package com.example.tipcalculator.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.tipcalculator.R
@@ -17,37 +19,21 @@ class MainFragment : Fragment() {
     private val viewModel by viewModels<CurrencyViewModel>()
     private lateinit var binding: FragmentMainBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val view = inflater.inflate(R.layout.fragment_main, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        super.onCreateView(inflater, container, savedInstanceState)
+        binding = FragmentMainBinding.inflate(inflater, container, false)
+        binding.viewmodel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.fragment = this
 
-        return view
+        return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding = FragmentMainBinding.bind(view)
-
-        viewModel.readAllData.observe(viewLifecycleOwner) {
-            if (it == null) {
-                binding.tvEur1.text = ""
-                binding.tvUsd1.text = ""
-                return@observe
-            }
-            binding.tvEur1.text = it.eur
-            binding.tvUsd1.text = it.usd
-        }
-
-        binding.run {
-            deleteData.setOnClickListener { viewModel.deleteAllCurrencies() }
-            calculateButton.setOnClickListener {
-                viewModel.calculateTip(binding.tvCount.text.toString(), binding.spinner.selectedItem.toString())
-                tvResult.text = viewModel.resultLiveData.value
-                tvSymbol.text = viewModel.symbolLiveData.value
-            }
+    fun calculateTip() {
+        with(binding) {
+            viewModel.calculateTip(tvCount.text.toString(), spinner.selectedItem.toString())
+            tvResult.text = viewModel.resultLiveData.value
+            tvSymbol.text = viewModel.symbolLiveData.value
         }
     }
 }

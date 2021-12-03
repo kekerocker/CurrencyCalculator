@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import java.math.BigDecimal
 
 class CurrencyViewModel @ViewModelInject constructor(
-    val repository: CurrencyRepository
+    private val repository: CurrencyRepository
 ) : ViewModel() {
 
     val readAllData: LiveData<Currency> = repository.readAllData
@@ -38,14 +38,14 @@ class CurrencyViewModel @ViewModelInject constructor(
     fun calculateTip(number: String, spinnerResult: String) {
         var mathResult: BigDecimal? = null
 
-        val usd = readAllData.value?.usd?.toBigDecimal()
-        val eur = readAllData.value?.eur?.toBigDecimal()
+        val usd = readAllData.value?.usd?.toBigDecimal() ?: "0".toBigDecimal()
+        val eur = readAllData.value?.eur?.toBigDecimal() ?: "0".toBigDecimal()
 
         when (spinnerResult) {
-            "RUB-USD" -> mathResult = number.toBigDecimal() / usd!!
-            "RUB-EUR" -> mathResult = number.toBigDecimal() / eur!!
-            "EUR-RUB" -> mathResult = number.toBigDecimal() * eur!!
-            "USD-RUB" -> mathResult = number.toBigDecimal() * usd!!
+            "RUB-USD" -> mathResult = number.toBigDecimal() / usd
+            "RUB-EUR" -> mathResult = number.toBigDecimal() / eur
+            "EUR-RUB" -> mathResult = number.toBigDecimal() * eur
+            "USD-RUB" -> mathResult = number.toBigDecimal() * usd
         }
         symbolLiveData.value = when (spinnerResult) {
             "RUB-EUR" ->  "€"
