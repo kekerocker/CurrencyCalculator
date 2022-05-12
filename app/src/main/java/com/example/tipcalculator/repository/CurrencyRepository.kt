@@ -10,7 +10,7 @@ import org.jsoup.Jsoup
 import javax.inject.Inject
 
 class CurrencyRepository @Inject constructor(
-    private val currencyDao: CurrencyDao
+    private val currencyDao: CurrencyDao,
 ) {
 
     val readAllData: LiveData<Currency> = currencyDao.readAllData()

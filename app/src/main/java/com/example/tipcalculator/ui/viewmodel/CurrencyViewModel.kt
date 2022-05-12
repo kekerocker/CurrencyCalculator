@@ -1,22 +1,23 @@
 package com.example.tipcalculator.ui.viewmodel
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tipcalculator.model.Currency
 import com.example.tipcalculator.repository.CurrencyRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
+import javax.inject.Inject
 
-class CurrencyViewModel @ViewModelInject constructor(
+@HiltViewModel
+class CurrencyViewModel @Inject constructor(
     private val repository: CurrencyRepository
 ) : ViewModel() {
 
     val readAllData: LiveData<Currency> = repository.readAllData
 
-    val symbolLiveData = MutableLiveData<String>()
     val resultLiveData = MutableLiveData<String>()
 
     init {
@@ -37,7 +38,6 @@ class CurrencyViewModel @ViewModelInject constructor(
 
     fun calculateTip(number: String, spinnerResult: String) {
         var mathResult: BigDecimal? = null
-
         val usd = readAllData.value?.usd?.toBigDecimal() ?: "0".toBigDecimal()
         val eur = readAllData.value?.eur?.toBigDecimal() ?: "0".toBigDecimal()
 
@@ -47,11 +47,11 @@ class CurrencyViewModel @ViewModelInject constructor(
             "EUR-RUB" -> mathResult = number.toBigDecimal() * eur
             "USD-RUB" -> mathResult = number.toBigDecimal() * usd
         }
-        symbolLiveData.value = when (spinnerResult) {
-            "RUB-EUR" ->  "€"
-            "RUB-USD" ->  "$"
+        val symbol: String = when (spinnerResult) {
+            "RUB-EUR" -> "€"
+            "RUB-USD" -> "$"
             else -> "₽"
         }
-       resultLiveData.value = String.format("%.2f", mathResult)
+       resultLiveData.value = String.format("%.2f", mathResult) + symbol
     }
 }

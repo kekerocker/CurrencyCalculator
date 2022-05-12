@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="viewmodel"
+            name="vm"
             type="com.example.tipcalculator.ui.viewmodel.CurrencyViewModel" />
         <variable
             name="fragment"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
-            android:text="@{viewmodel.readAllData.usd}"
+            android:text="@{vm.readAllData.usd}"
             android:textColor="#000000"
             app:layout_constraintStart_toEndOf="@+id/tv_usd"
             app:layout_constraintTop_toTopOf="parent"
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
-            android:text="@{viewmodel.readAllData.eur}"
+            android:text="@{vm.readAllData.eur}"
             android:textColor="#000000"
             app:layout_constraintStart_toEndOf="@+id/tv_eur"
             app:layout_constraintTop_toBottomOf="@+id/tv_usd1"
@@ -75,7 +75,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/calculate_button"
-            tools:text="342" />
+            tools:text="342$" />
 
         <EditText
             android:id="@+id/tv_count"
@@ -105,23 +105,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-            android:onClick="@{() -> viewmodel.deleteAllCurrencies()}"
+            android:onClick="@{() -> vm.deleteAllCurrencies()}"
             android:text="Delete Data"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_symbol"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="64dp"
-            android:textColor="#000000"
-            android:textSize="32sp"
-            app:layout_constraintStart_toEndOf="@+id/tv_result"
-            app:layout_constraintTop_toBottomOf="@+id/calculate_button"
-            tools:text="$" />
 
         <Spinner
             android:id="@+id/spinner"
