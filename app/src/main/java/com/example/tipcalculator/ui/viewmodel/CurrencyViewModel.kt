@@ -1,12 +1,13 @@
 package com.example.tipcalculator.ui.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.util.Log
+import androidx.lifecycle.*
 import com.example.tipcalculator.model.Currency
 import com.example.tipcalculator.repository.CurrencyRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 import javax.inject.Inject
@@ -16,9 +17,10 @@ class CurrencyViewModel @Inject constructor(
     private val repository: CurrencyRepository
 ) : ViewModel() {
 
-    val readAllData: LiveData<Currency> = repository.readAllData
+    val readAllData: Flow<Currency> = repository.readAllData
 
-    val resultLiveData = MutableLiveData<String>()
+    private val _result: MutableSharedFlow<String> = MutableSharedFlow()
+    val result: SharedFlow<String> get() = _result
 
     init {
         downloadCurrency()
@@ -36,22 +38,33 @@ class CurrencyViewModel @Inject constructor(
         }
     }
 
-    fun calculateTip(number: String, spinnerResult: String) {
+    suspend fun calculateTip(number: String, spinnerResult: String) {
         var mathResult: BigDecimal? = null
-        val usd = readAllData.value?.usd?.toBigDecimal() ?: "0".toBigDecimal()
-        val eur = readAllData.value?.eur?.toBigDecimal() ?: "0".toBigDecimal()
+        var symbol = ""
+        var usd: BigDecimal
+        var eur: BigDecimal
+        Log.d("QQQ", "Starting collecting")
+        readAllData.collect {
+            if (it != null) {
+                Log.d("QQQ", "Collecting in ViewModel")
+                usd = (it.usd ?: "0").toBigDecimal()
+                eur = (it.eur ?: "0").toBigDecimal()
 
-        when (spinnerResult) {
-            "RUB-USD" -> mathResult = number.toBigDecimal() / usd
-            "RUB-EUR" -> mathResult = number.toBigDecimal() / eur
-            "EUR-RUB" -> mathResult = number.toBigDecimal() * eur
-            "USD-RUB" -> mathResult = number.toBigDecimal() * usd
+                when (spinnerResult) {
+                    "RUB-USD" -> mathResult = number.toBigDecimal() / usd
+                    "RUB-EUR" -> mathResult = number.toBigDecimal() / eur
+                    "EUR-RUB" -> mathResult = number.toBigDecimal() * eur
+                    "USD-RUB" -> mathResult = number.toBigDecimal() * usd
+                }
+                symbol = when (spinnerResult) {
+                    "RUB-EUR" -> "€"
+                    "RUB-USD" -> "$"
+                    else -> "₽"
+                }
+                _result.emit(String.format("%.2f", mathResult) + symbol)
+                Log.d("QQQ", "Emited: ${String.format("%.2f", mathResult) + symbol}")
+            }
         }
-        val symbol: String = when (spinnerResult) {
-            "RUB-EUR" -> "€"
-            "RUB-USD" -> "$"
-            else -> "₽"
-        }
-       resultLiveData.value = String.format("%.2f", mathResult) + symbol
+
     }
 }

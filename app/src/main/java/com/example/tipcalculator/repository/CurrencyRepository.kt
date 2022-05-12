@@ -1,10 +1,10 @@
 package com.example.tipcalculator.repository
 
-import androidx.lifecycle.LiveData
 import com.example.tipcalculator.data.CurrencyDao
 import com.example.tipcalculator.model.Currency
 import com.example.tipcalculator.other.Constants.URL
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 import javax.inject.Inject
@@ -13,7 +13,7 @@ class CurrencyRepository @Inject constructor(
     private val currencyDao: CurrencyDao,
 ) {
 
-    val readAllData: LiveData<Currency> = currencyDao.readAllData()
+    val readAllData: Flow<Currency> = currencyDao.readAllData()
 
     private suspend fun addCurrency(currency: Currency) {
         currencyDao.addCurrency(currency)
@@ -35,5 +35,6 @@ class CurrencyRepository @Inject constructor(
 
     suspend fun deleteAllCurrencies() {
         currencyDao.deleteAllCurrencies()
+        downloadCurrency()
     }
 }

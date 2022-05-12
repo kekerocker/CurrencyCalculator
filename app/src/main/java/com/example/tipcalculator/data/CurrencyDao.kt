@@ -1,11 +1,11 @@
 package com.example.tipcalculator.data
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.tipcalculator.model.Currency
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CurrencyDao {
@@ -16,5 +16,5 @@ interface CurrencyDao {
     suspend fun deleteAllCurrencies()
 
     @Query("SELECT * FROM currency_table")
-    fun readAllData(): LiveData<Currency>
+    fun readAllData(): Flow<Currency>
 }
